@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.UserBeans;
-import dao.UserDao;
+import dao.UserDao1;
 
 /**
  * Servlet implementation class Item
@@ -31,8 +31,7 @@ public class Item extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		UserDao userDao = new UserDao();
+		UserDao1 userDao = new UserDao1();
 		List<UserBeans> userList = userDao.findAll();
 
 		// リクエストスコープにユーザ一覧情報をセット

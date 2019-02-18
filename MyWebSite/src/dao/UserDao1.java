@@ -11,40 +11,37 @@ import java.util.List;
 import base.DBManager;
 import beans.UserBeans;
 
-public class UserDao {
+public class UserDao1 {
 
 
 	    /**
 	     * ログインIDとパスワードに紐づくユーザ情報を返す
-	     * @param loginId
-	     * @param password
-	     * @return
 	     */
-	    public UserBeans findByLoginInfo(String loginId, String password) {
+	    public UserBeans findByLogin(String loginId, String password) {
 	        Connection conn = null;
 	        try {
 	            // データベースへ接続
 	            conn = DBManager.getConnection();
 
 	            // SELECT文を準備
-	            String sql = "SELECT * FROM user WHERE login_id = ? and password = ?";
-	            //UserDetailServlet?id=${user.id}
+	            String sql = "SELECT * FROM user1 WHERE login_id ='"+loginId+"'"+ "and login_password ='"+password+"'";
+
 
 	             // SELECTを実行し、結果表を取得
 	            PreparedStatement pStmt = conn.prepareStatement(sql);
-	            pStmt.setString(1, loginId);
-	            pStmt.setString(2, password);
+
 
 	            ResultSet rs = pStmt.executeQuery();
 
-	             // 主キーに紐づくレコードは1件のみなので、rs.next()は1回だけ行う
 	            if (!rs.next()) {
 	                return null;
 	            }
 
 	            String loginIdData = rs.getString("login_id");
 	            String nameData = rs.getString("name");
-	            return new UserBeans(loginIdData, nameData);
+	            String address =  rs.getString("address");
+
+	            return new UserBeans(loginIdData, nameData,address);
 
 	        } catch (SQLException e) {
 	            e.printStackTrace();
@@ -52,12 +49,14 @@ public class UserDao {
 	        } finally {
 	            // データベース切断
 	            if (conn != null) {
-	                try {
-	                    conn.close();
-	                } catch (SQLException e) {
-	                    e.printStackTrace();
-	                    return null;
-	                }
+
+	                    try {
+							conn.close();
+						} catch (SQLException e) {
+
+							e.printStackTrace();
+						}
+
 	            }
 	        }
 	    }
@@ -77,7 +76,7 @@ public class UserDao {
 
 	            // SELECT文を準備
 	            // 管理者以外を取得するようSQLを変更する
-	            String sql = "SELECT * FROM user1 WHERE id!=1";
+	            String sql = "SELECT * FROM user1";
 
 	             // SELECTを実行し、結果表を取得
 	            Statement stmt = conn.createStatement();
@@ -115,8 +114,6 @@ public class UserDao {
 	        return userList;
 	    }
 
-
-
 	    //ユーザ新規登録
 
 	    public void shinki(String loginId, String password,String userName,String address) throws SQLException {
@@ -124,8 +121,6 @@ public class UserDao {
 	        try {
 	            // データベースへ接続
 	            conn = DBManager.getConnection();
-
-
 
 	            // INSERT文を準備
 		   			 String sql = "INSERT INTO user1(login_id,login_password,name,address,create_date) VALUES (?,?,?,?,now())";
@@ -136,9 +131,7 @@ public class UserDao {
 	            pStmt.setString(3, userName);
 	            pStmt.setString(4, address);
 
-
 	            pStmt.executeUpdate();
-
 
 	        } catch (SQLException e) {
 	            e.printStackTrace();
@@ -209,7 +202,7 @@ public class UserDao {
 
 	//ユーザ情報更新
 
-	    public void koushin(String loginId, String password,String userName,String address)  {
+	    public void koushin(String loginId, String userName,String address,String password){
 	        Connection conn = null;
 	        try {
 	            // データベースへ接続
@@ -217,29 +210,20 @@ public class UserDao {
 
 	            if(password.equals("")) {
 
-	            	String sql = "UPDATE user1 SET name = ?,address = ?,update_date = now() WHERE login_id = ?";
+	            	String sql = "UPDATE user1 SET name ='"+userName+"'"+",address = '"+address+"'"+"WHERE login_id = '"+loginId+"'";
 
 	            	PreparedStatement pStmt = conn.prepareStatement(sql);
-	                 pStmt.setString(3, loginId);
-	                 pStmt.setString(1, userName);
-	                 pStmt.setString(2, address);
-
 
 	                pStmt.executeUpdate();
 	            }
 
 	           // UPDATE文を準備
 	            else {
-	           String sql = "UPDATE user1 SET login_password = ?,name = ?,address = ?,update_date = now() WHERE login_id = ?";
+	           String sql = "UPDATE user1 SET login_password ='"+password+"'"+",name ='"+userName+"'"+",address ='"+address+"'"+"WHERE login_id ='"+loginId+"'";
 
 
 	             // 実行し、結果表を取得
 	            PreparedStatement pStmt = conn.prepareStatement(sql);
-	            pStmt.setString(4, loginId);
-	            pStmt.setString(1, password);
-	            pStmt.setString(2, userName);
-	            pStmt.setString(3, address);
-
 
 	           pStmt.executeUpdate();
 	            }
@@ -270,12 +254,12 @@ public class UserDao {
 	            conn = DBManager.getConnection();
 
 	            // UPDATE文を準備
-	           String sql = "DELETE FROM user1 WHERE login_id = ?";
+	           String sql = "DELETE FROM user1 WHERE login_id="+"'"+loginId+"'";
 
 
 	             // 実行し、結果をSQLに
 	            PreparedStatement pStmt = conn.prepareStatement(sql);
-	            pStmt.setString(1, loginId);
+
 	            pStmt.executeUpdate();
 
 
@@ -294,15 +278,6 @@ public class UserDao {
 	            }
 	        }
 
-
 	    }
-
-
-	        }
-
-
-
-
-
-
+  }
 

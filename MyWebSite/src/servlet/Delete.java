@@ -8,9 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import beans.UserBeans;
-import dao.UserDao;
+import dao.UserDao1;
 
 /**
  * Servlet implementation class Delete
@@ -27,24 +27,21 @@ public class Delete extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		String loginId = request.getParameter("id");
+		//セッションの確認
+        HttpSession session = request.getSession();
 
-		// loginIdを引数にして、loginIdに紐づくユーザ情報を出力する
-		UserDao userDao = new UserDao();
-		UserBeans user = userDao.shousai(loginId);
+        if(session.getAttribute("userInfo") == null){
 
+ 		         response.sendRedirect("Item");
 
-		// リクエストスコープにユーザ一覧情報をセット
-		request.setAttribute("user", user);
+ 		         return;
+		}
 
 			// ユーザ削除確認のjspにフォワード
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/Delete.jsp");
 		dispatcher.forward(request, response);
 
-
 	}
-
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -53,10 +50,10 @@ public class Delete extends HttpServlet {
 
 		String loginId = request.getParameter("loginId");
 
-		UserDao userDao =new UserDao();
+		UserDao1 userDao =new UserDao1();
 		userDao.sakujo(loginId);
 
-		response.sendRedirect("Item");
+		response.sendRedirect("Logout");
 	}
 
 }

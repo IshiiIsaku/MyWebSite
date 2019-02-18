@@ -11,11 +11,15 @@
 <body style="
     background-image: url(&quot;http://kiliman.net/wp/wp-content/uploads/2015/03/Dollarphotoclub_72647985-e1427187916486.jpg&quot;);
 ">
+<c:if test="${userInfo != null}">
+<li><font face="筆記体系"color="white">${userInfo.name}さん</font></li>
+</c:if>
 <h1 class="mx-auto" style="width: 300px;"><font size="10"face="筆記体系"color="white">Kaffa Africa</font></h1>
+<c:if test="${userInfo != null}">
 <div class="mx-auto"style="float:right;width: 15%;">
 <a style="color:red" href="Logout"><button type="submit" class="btn btn-danger">ログアウト</button></a>
 </div>
-
+</c:if>
 <br><br>
 <h4 class="mx-auto" style="width: 100px;"><font face="筆記体系"color="white">購入内容のご確認</font></h4>
                           <div class="mx-auto" style="width: 300px;">

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.UserBeans;
-import dao.UserDao;
+import dao.UserDao1;
 
 
 @WebServlet("/Login")
@@ -24,9 +24,8 @@ public class Login extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-
-		// フォワード！！
+		
+		// フォワード
 		 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/Login.jsp");
 		 		dispatcher.forward(request, response);
 	}
@@ -43,15 +42,14 @@ public class Login extends HttpServlet {
      		String password = request.getParameter("password");
 
      	// リクエストパラメータの入力項目を引数に渡して、Daoのメソッドを実行
-    		UserDao userDao = new UserDao();
-    		UserBeans userInfo = userDao.findByLoginInfo(loginId,password);
+    		UserDao1 userDao = new UserDao1();
+    		UserBeans userInfo = userDao.findByLogin(loginId,password);
 
 
-    		/** テーブルに該当のデータが見つからなかった場合 **/
+   		/** テーブルに該当のデータが見つからなかった場合 **/
     		if (userInfo == null) {
     			// リクエストスコープにエラーメッセージをセット
     			request.setAttribute("errMsg", "ログインIDまたはパスワードが異なります");
-
 
      	// ログインjspにフォワード
      				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/Login.jsp");
@@ -63,7 +61,7 @@ public class Login extends HttpServlet {
 		/** テーブルに該当のデータが見つかった場合 **/
 		// セッションにユーザの情報をセット
 		HttpSession session = request.getSession();
-		session.setAttribute("userInfo", userInfo);
+		session.setAttribute("userInfo",userInfo);
 
 		// 商品のサーブレットにリダイレクト
 		response.sendRedirect("Item");

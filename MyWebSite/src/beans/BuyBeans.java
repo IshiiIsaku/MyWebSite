@@ -6,23 +6,10 @@ import java.util.Date;
 public class BuyBeans {
 	private int id;
 	private int userId;
-	private int buyId;
-	private int itemId;
-	private int number;
 	private int totalPrice;
 	private Date buyDate;
 
 
-	public BuyBeans(int i, int j, Date date, int k, int l, int m, String string) {
-
-	}
-	public BuyBeans() {
-
-	}
-
-	public BuyBeans(BuyBeans data) {
-
-	}
 	public int getId() {
 		return id;
 	}
@@ -34,12 +21,6 @@ public class BuyBeans {
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
-	}
-	public int getNumber() {
-		return number;
-	}
-	public void setNumber(int number) {
-		this.number = number;
 	}
 
 	public int getTotalPrice() {
@@ -65,20 +46,6 @@ public class BuyBeans {
 
 	public void add() {
 
-
-	}
-
-	public int getBuyId() {
-		return buyId;
-	}
-	public void setBuyId(int buyId) {
-		this.buyId = buyId;
-	}
-	public int getItemId() {
-		return itemId;
-	}
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
 	}
 
 	private String name;
@@ -99,7 +66,6 @@ public class BuyBeans {
 	public void setPrice(int itemPrice) {
 		this.price = itemPrice;
 	}
-
 
 }
 

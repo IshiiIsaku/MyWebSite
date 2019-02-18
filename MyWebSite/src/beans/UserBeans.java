@@ -19,8 +19,10 @@ public class UserBeans {
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
 
-	public UserBeans(String loginIdData, String nameData) {
-		// TODO 自動生成されたコンストラクター・スタブ
+	public UserBeans(String loginIdData, String nameData,String address) {
+		this.name = nameData;
+		this.loginId = loginIdData;
+		this.address = address;
 	}
 
 	public String getName() {

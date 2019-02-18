@@ -10,21 +10,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.UserDao;
+import dao.UserDao1;
 
-/**
- * Servlet implementation class Shinki
- */
+
+
 @WebServlet("/Shinki")
 public class Shinki extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public Shinki() {
         super();
-        // TODO Auto-generated constructor stub
+
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,7 +34,7 @@ public class Shinki extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//doGet(request, response);
+
 
 		 // リクエストパラメータの文字コードを指定
         request.setCharacterEncoding("UTF-8");
@@ -88,7 +85,7 @@ public class Shinki extends HttpServlet {
 
 
     		// リクエストパラメータの入力項目を引数に渡して、Daoのメソッドを実行
-     		UserDao userDao = new UserDao();
+     		UserDao1 userDao = new UserDao1();
      		try {
      			userDao.shinki(loginId, password, name, address);
      		} catch(SQLException e) {
